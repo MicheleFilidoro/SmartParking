@@ -1,0 +1,131 @@
+//IMPLEMENTATO
+
+1. Stato del MWbot
+Eventi da notificare:
+Quando il MWbot è:
+Libero
+In movimento verso un'auto.
+In carica (attualmente sta caricando un'auto specifica).
+Carica completata per un'auto.
+Topic MQTT suggerito:
+mwbot/stato
+Payload:
+json
+Copia codice
+{
+  "stato": "libero | in_movimento | in_carica",
+  "idAutoElettrica": "123",  // ID dell'auto corrente (se applicabile)
+  "percentualeCarica": "80" // Percentuale raggiunta (se applicabile)
+}
+
+//IMPLEMENTATO
+
+2. Stato di occupazione dei posti auto
+Eventi da notificare:
+Un posto auto è:
+Occupato
+Liberato
+Topic MQTT suggerito:
+posti_auto/{idPosto}/stato
+Payload:
+json
+Copia codice
+{
+  "idPosto": "1",
+  "stato": "occupato | libero"
+}
+
+//DA IMPLEMENTARE
+
+3. Notifiche per gli utenti
+Eventi da notificare:
+Prenotazioni: Conferma, scadenza o cancellazione automatica.
+Ricarica completata: Notifica quando l'auto raggiunge il livello desiderato.
+Richiesta aggiuntiva: Quando un utente richiede un'ulteriore ricarica.
+Topic MQTT suggerito:
+utenti/{idUtente}/notifiche
+Payload:
+json
+Copia codice
+{
+  "tipoNotifica": "prenotazione | ricarica_completata | richiesta_aggiuntiva",
+  "dettagli": "Dettagli della notifica specifica"
+}
+
+//IMPLEMENTATO A META'
+
+4. Aggiornamenti per l'amministratore
+Eventi da notificare:
+Aggiornamenti sullo stato del parcheggio:
+Numero di posti occupati/liberi.
+Stato dei sensori e attuatori.
+Riepilogo transazioni:
+Pagamenti recenti.
+Topic MQTT suggerito:
+amministratore/stato_parcheggio
+Payload:
+json
+Copia codice
+{
+  "postiOccupati": 12,
+  "postiLiberi": 8,
+  "sensoriNonFunzionanti": [2, 5]   //NON IMPEMENTATO
+}
+
+//DA IMPLEMENTARE
+
+5. Gestione della coda di ricarica
+Eventi da notificare:
+Aggiornamenti della coda:
+Numero di auto in attesa.
+Tempo stimato per la ricarica.
+Topic MQTT suggerito:
+mwbot/coda
+Payload:
+json
+Copia codice
+{
+  "autoInCoda": [
+    { "idAuto": "1", "percentualeDesiderata": 80 },
+    { "idAuto": "2", "percentualeDesiderata": 90 }
+  ],
+  "tempoStimato": "30 minuti"
+}
+
+//DA IMPLEMENTARE
+
+6. Stato dei sensori
+Eventi da notificare:
+Cambiamento di stato nei sensori (es. rilevamento occupazione di un posto auto).
+Malfunzionamento di un sensore.
+Topic MQTT suggerito:
+sensori/{idSensore}/stato
+Payload:
+json
+Copia codice
+{
+  "idSensore": "123",
+  "stato": "funzionante | non_funzionante",
+  "dettagli": "Eventuale messaggio aggiuntivo"
+}
+
+//DA IMPLEMENTARE
+
+7. Stato degli attuatori
+Eventi da notificare:
+Stato corrente dell’attuatore (ad esempio, se un attuatore ha avviato/stoppato una ricarica).
+Topic MQTT suggerito:
+attuatori/{idAttuatore}/stato
+Payload:
+json
+Copia codice
+{
+  "idAttuatore": "456",
+  "stato": "attivo | inattivo",
+  "tempoAttivazione": "15 minuti"
+}
+Perché queste notifiche sono importanti?
+Integrazione in tempo reale: Gli utenti e l'amministratore ricevono aggiornamenti immediati sulle operazioni del sistema.
+Monitoraggio efficace: Lo stato del MWbot, dei posti auto, e dei sensori consente una gestione ottimale.
+Scalabilità: Il sistema è pronto per supportare più MWbot, utenti e posti auto.
+Se desideri ulteriori dettagli sull'implementazione di uno di questi punti, fammi sapere!
